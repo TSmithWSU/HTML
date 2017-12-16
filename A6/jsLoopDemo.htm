@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<!--Honor Code: I acknowledge that this code represents my own work: TS Date: 10/28/17--> 
+<meta charset="utf-8" /> 
+<meta name="description" content="Assignment 6 Part 2" /> 
+<meta name="keywords" content="Javascript, CS" /> 
+<meta name="author" content="Tyler Smith" /> 
+
+
+<title>JS Loop Demo</title> 
+
+</head> 
+<body>  
+<script>
+    function tableFunction(){
+      var userIN = prompt("Enter the number of row that you want.");
+      var inputcheck;
+      if (userIN < 0){
+        alert("Enter a number greater then 0.");
+        location.reload();
+      } 
+			else if  (isNaN(userIN) === true) {
+        alert("You didn't enter a number. ");
+        location.reload();
+      } 
+			else {
+        inputcheck = userIN;
+        var tableC = document.createElement("table");
+        tableC.border = "1";
+        var i;
+        for (i = 1; i <= userIN; i++) {
+          var TableRow = document.createElement("tr");
+          var TableData = document.createElement("td");
+          var TableText = document.createTextNode("Row " + i)
+          tableC.appendChild(TableRow);
+          TableRow.appendChild(TableData);
+          TableData.appendChild(TableText);
+        }
+      }
+      var TableM = document.getElementById("GenTable");
+      TableM.appendChild(tableC);
+    }
+  </script>
+</head>
+<body onload="tableFunction()">
+  <p id="GenTable">
+  </p>
+  <a href="jsTimeDemo.html">Back to Time Demo</a>
+
+
+</body> 
+</html> 

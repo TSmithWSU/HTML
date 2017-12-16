@@ -1,0 +1,374 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<!--Honor Code: I acknowledge that this code represents my own work: TS Date:  12/09/17--> 
+<meta charset="utf-8" /> 
+<meta name="description" content="A simple rock paper scissors game with a twist" /> 
+<meta name="keywords" content="game, rock paper scissors" /> 
+<meta name="author" content="Tyler" /> 
+
+<script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+
+
+<title>Rock Paper Scissors</title> 
+
+<style>
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: #f6f6f6;
+}
+
+h1 {
+  text-align: center;
+  padding: 40px 0px 10px;
+}
+
+.container {
+  background-color: white;
+  border-radius: 3px;
+  margin: 50px auto;
+  width: 600px;
+  height: 720px;
+  box-shadow: 3px 3px 30px rgba(0, 0, 0, 0.1);
+}
+
+.button-row {
+  text-align: center;
+  margin: 0px auto;
+}
+
+.btn {
+  transition: box-shadow 0.3s;
+  font-size: 24px;
+  padding: 20px 25px;
+  width: 150px;
+  margin: 0px 10px 0px 10px;
+  background-color: white;
+  border: 4px solid grey;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px 0px #a8a8a8;
+}
+
+.btn:hover {
+  box-shadow: 4px 4px 6px 0px #a8a8a8;
+}
+
+.game-message-placement {
+  text-align: center;
+  width: 300px;
+  margin: 50px auto 0px;
+}
+
+#game-message {
+  font-size: 50px;
+  height: 185px;
+}
+
+.game-won {
+  background-color: blue;
+  color: white;
+
+}
+
+.game-draw {
+  background-color: lightgrey;
+  color: #545454;
+
+}
+
+.game-lose {
+  background-color: black;
+
+  color: white;
+}
+
+.computer-message {
+  font-size: 16px;
+}
+
+.scoreboard-placement {
+  margin: 0px 15px 0px 15px;
+  border-top: 1px solid lightgrey;
+  text-align: center;
+}
+
+.scoreboard-row {
+  font-size: 18px;
+  display: inline-block;
+}
+
+#playerWins {
+  margin-right: 40px;
+}
+
+#playerLosses {
+  margin-left: 40px;
+}
+
+#reset-scores {
+  text-align: center;
+  margin: 0px auto;
+  width: 100px;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>
+
+
+
+</head> 
+
+<body>  
+<div class="container">
+
+  <h1>Enter Your Bet Below</h1>
+	
+	<input type="number" id="myNumber" value="0">
+	<br>
+	
+
+
+  <div class="button-row">
+    <button class="rock btn">Rock</button>
+    <button class="paper btn">Paper</button>
+    <button class="scissors btn">Scissors</button>
+  </div>
+
+  <div class="game-message-placement">
+    <div id="game-message">
+
+    </div>
+  </div>
+
+  
+  <div class="scoreboard-placement">
+    <div id="scoreboard">
+      <p class="scoreboard-row" id="playerWins"><strong>You: </strong><span id="wins">0</span></p>
+      <p class="scoreboard-row" id="playerDraws"><strong>Draws:  </strong><span id="draws">0</span></p>
+      <p class="scoreboard-row" id="playerLosses"><strong>Computer: </strong><span id="losses">0</span></p>
+			 <p class="scoreboard-row" id="playerBet"><strong>Your $: </strong><span id="betting">10</span></p>
+    </div>
+  </div>
+  
+  <p id="reset-scores">Reset Game</p>
+  
+</div>
+
+<script >
+
+var playerWin = 0;
+var aiWin = 0;
+var draws = 0;
+var getBet = 0;
+var moneyTotal = 10;
+var rounds = 0;
+var doubleBet = 1;
+var highScore = 25;
+var playerRoll; //rock = 1, paper = 2, sci = 3
+var gameMessage = $('#game-message');
+var scoreBoard = $('#scoreboard');
+
+
+//rock 
+$('.rock').click(function() {
+  playerRoll = 1;
+  var computerRoll = Math.floor(Math.random() * 3 + 1);
+	var getBet = document.getElementById("myNumber").value ;
+  
+  //draw case
+  if (computerRoll === playerRoll) {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-draw">Draw!</p>' + '<p class="computer-message">The Computer chose rock too!</p>').fadeIn(300);
+      
+      draws++;
+      $('#draws').html('').append(draws);
+			doubleBet = 2;
+			
+					rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin);
+ }
+    });
+    
+    // rock vs AI paper
+  } else if (playerRoll === 1 && computerRoll === 2) {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-lose">You lost</p>' + '<p class="computer-message">The Computer chose paper!</p>').fadeIn(300);
+      
+      aiWin++;
+      $('#losses').html('').append(aiWin);
+			moneyTotal -= (parseInt(document.getElementById("myNumber").value)*doubleBet);
+      $('#betting').html('').append(moneyTotal);
+			doubleBet = 1;
+			
+					rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });
+    
+    // rock vs AI scissors
+  } else {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-won">You Won!</p>' + '<p class="computer-message">The Computer chose scissors!</p>').fadeIn(300);
+      
+      playerWin++;
+      $('#wins').html('').append(playerWin);
+			moneyTotal += (parseInt(document.getElementById("myNumber").value)*doubleBet);
+      $('#betting').html('').append(moneyTotal);
+			doubleBet = 1;
+			
+					rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });                
+    
+  }
+
+});//end of rock click
+
+//paper click
+$('.paper').click(function() {
+  playerRoll = 2;
+  var computerRoll = Math.floor(Math.random() * 3 + 1);
+  
+  //draw
+  if (computerRoll === playerRoll) {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-draw">Draw!</p>' + '<p class="computer-message">The Computer chose paper too!</p>').fadeIn(300);
+      doubleBet = 2;
+      draws++;
+      $('#draws').html('').append(draws);
+						rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });
+  //paper vs AI rock
+  } else if (playerRoll === 2 && computerRoll === 1) {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-won">You Won!</p>' + '<p class="computer-message">The Computer chose rock!</p>').fadeIn(300);
+      
+      playerWin++;
+      $('#wins').html('').append(playerWin);
+			moneyTotal += (parseInt(document.getElementById("myNumber").value)*doubleBet);
+      $('#betting').html('').append(moneyTotal);
+			doubleBet = 1;
+			
+						rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });
+  //paper vs AI scissors
+  } else {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-lose">You lost</p>' + '<p class="computer-message">The Computer chose scissors</p>').fadeIn(300);
+      
+      aiWin++;
+			
+      $('#losses').html('').append(aiWin);
+			moneyTotal -= (parseInt(document.getElementById("myNumber").value)*doubleBet);
+      $('#betting').html('').append(moneyTotal);
+			doubleBet = 1;
+			
+			rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });
+  }
+  
+
+});
+
+//scissors click
+$('.scissors').click(function() {
+  playerRoll = 3;
+  var computerRoll = Math.floor(Math.random() * 3 + 1);
+  //draw
+  if (computerRoll === playerRoll) {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-draw">Draw!</p>' + '<p class="computer-message">The Computer chose scissors too!</p>').fadeIn(300);
+      doubleBet = 2;
+      draws++;
+      $('#draws').html('').append(draws);
+			
+					rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+			
+
+    });
+  //scissors vs AI paper
+  } else if (playerRoll === 3 && computerRoll === 2) {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-won">You Won!</p>' + '<p class="computer-message">The Computer chose paper</p>').fadeIn(300);
+      
+      playerWin++;
+      $('#wins').html('').append(playerWin);
+			moneyTotal += (parseInt(document.getElementById("myNumber").value)*doubleBet);
+      $('#betting').html('').append(moneyTotal);
+			doubleBet = 1;
+			
+					rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });
+  //scissors vs AI rock
+  } else {
+    gameMessage.fadeOut(300, function() {
+      gameMessage.html('').append('<p class="game-lose">You lost</p>' + '<p class="computer-message">The Computer chose rock</p>').fadeIn(300);
+      
+      aiWin++;
+      $('#losses').html('').append(aiWin);
+			moneyTotal -= (parseInt(document.getElementById("myNumber").value)*doubleBet);
+      $('#betting').html('').append(moneyTotal);
+			doubleBet = 1;
+			
+					rounds++;
+			if (moneyTotal <= 0) {
+						alert("You Lost. You: " + playerWin + " Computer: " + aiWin); }
+			if (rounds == 10) {
+						alert("Game Over. You: " + playerWin + " Computer: " + aiWin); }
+    });
+  }//scissors 
+  
+
+});
+
+//reset everything
+$('#reset-scores').click(function() {
+  rounds = 0;
+  playerWin = 0;
+  $('#wins').html(playerWin);
+  draws = 0;
+  $('#draws').html(draws);
+  aiWin = 0;
+  $('#losses').html(aiWin);
+	moneyTotal = 10;
+  $('#betting').html(moneyTotal);
+});
+
+</script>
+
+
+
+</body> 
+</html> 

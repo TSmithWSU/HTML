@@ -1,0 +1,133 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<!--Honor Code: I acknowledge that this code represents my own work: TS Date:  10/27/2017--> 
+<meta charset="utf-8" /> 
+<meta name="description" content="CS2350 Assignment 7" /> 
+<meta name="keywords" content="Javascript, assignment" /> 
+<meta name="author" content="Tyler Smith" /> 
+
+
+<title>Time Demo</title> 
+
+<script>
+    function currentDay(){
+
+      var aftertime;
+		  var MinutesT;
+		  var timeOfDay;
+		  var weekdayc;
+      var dat = new Date();
+      var weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var min = dat.getMinutes();
+      var numberD = dat.getDate();
+      var fullyear = dat.getFullYear();
+
+
+      switch (dat.getDay()) {
+        case 0:
+          weekdayc = weekday[0];
+          break;
+        case 1:
+          weekdayc = weekday[1];
+          break;
+        case 2:
+          weekdayc = weekday[2];
+          break;
+        case 3:
+          weekdayc = weekday[3];
+          break;
+        case 4:
+          weekdayc = weekday[4];
+          break;
+        case 5:
+          weekdayc = weekday[5];
+          break;
+        case 6:
+          weekdayc = weekday[6];
+      }
+
+      var MonthCa;
+      switch (dat.getMonth()) {
+        case 0:
+          MonthCa = months[0];
+          break;
+        case 1:
+          MonthCa = months[1];
+          break;
+        case 2:
+          MonthCa = months[2];
+          break;
+        case 3:
+          MonthCa = months[3];
+          break;
+        case 4:
+          MonthCa = months[4];
+          break;
+        case 5:
+          MonthCa = months[5];
+          break;
+        case 6:
+          MonthCa = months[6];
+          break;
+        case 7:
+          MonthCa = months[7];
+          break;
+        case 8:
+          MonthCa = months[8];
+          break;
+        case 9:
+          MonthCa = months[9];
+          break;
+        case 10:
+          MonthCa = months[10];
+          break;
+        case 11:
+          MonthCa = months[11];
+					
+      }
+			
+			var hr = dat.getHours();
+      if (hr <= 11) {
+        timeOfDay = "Morning";
+      } else if (hr <= 16) {
+        timeOfDay = "Afternoon";
+      } else {
+        timeOfDay = "Evening";
+      }
+			var formatHr;
+      if (hr > 12){
+        formatHr = hr - 12;
+        aftertime = "P.M.";
+      } else {
+        formatHr = hr;
+        aftertime = "A.M";
+      }
+      
+     
+      if (min < 10){
+        MinutesT = "0" + min;
+      } else {
+        MinutesT = min;
+      }
+			
+
+
+
+      var DisplayM = "Good " + timeOfDay + ", it is " + formatHr + ":" + MinutesT + " " + aftertime + " on " + weekdayc + ", " + MonthCa + " " + numberD + ", "  + fullyear + "."
+      window.alert(DisplayM);
+    }
+  </script>
+
+</head>
+<body>
+  <p>
+		<input type = “button” value = "Click here to display date" OnClick = currentDay()>
+  </p>
+  <p>
+    <a href="jsLoopDemo.htm">Part 2 Loop Demo </a>
+  </p>
+</body>
+
+</html> 
